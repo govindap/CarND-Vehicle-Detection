@@ -1,7 +1,3 @@
-##Writeup Template
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
 
 **Vehicle Detection Project**
 
@@ -44,7 +40,7 @@ I started by reading in all the `vehicle` and `non-vehicle` images.
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
-Notebook shows example using the `YCrCb` color space and HOG parameters of `orientations=10`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
+Notebook shows example using the `YCrCb` color space and HOG parameters of `orientations=32`, `pixels_per_cell=(16, 16)` and `cells_per_block=(2, 2)`:
 
 
 
@@ -55,8 +51,8 @@ I tried various combinations of parameters and settled on below values, I choose
 
 The following values gave best performance.
 color_space = 'YCrCb'
-orient = 10
-pix_per_cell = 8
+orient = 32
+pix_per_cell = 16
 cell_per_block = 2
 hog_channel = 'ALL' 
 
@@ -68,9 +64,9 @@ I trained a linear SVM using Hog, spatial color features and histogram bin featu
 
 ####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-I decided to search in the following x_y_scale -- y_start_stop = [200, 600], x_start_stop = entire range
+I decided to search in the following x_y_scale -- y_start_stop = [200, 600], x_start_stop = [750, 1200]
 
-Following window sizes are used for search -- (64, 64), (96, 96), (116, 116), (128, 128) with xy_overlap of (0.5,0.5)
+Following window sizes are used for search -- (64, 64), (96, 96), (116, 116), (128, 128) with xy_overlap of (0.7,0.7)
 
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to try to minimize false positives and reliably detect cars?
@@ -98,5 +94,5 @@ Example result showing the heatmap for the test images and the result of `scipy.
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-The pipeline is not very accurate in vehicle detection because of the classifier technique used, deep learning will improve the accuracy significantly better. I spent lot of time finding the right feature combination for the best SVC classification accuracy. It's not very robust to positive identification when the car is visible partially or when there are trees, shadows or visibility issues along the way.' It can be made more robust by trying different classifiers and improving the accuracy on the test set. 
+The pipeline is not very accurate in vehicle detection because of the classifier technique used, deep learning will improve the accuracy significantly better. I spent lot of time finding the right feature combination for the best SVC classification accuracy. It's not very robust to positive identification when the car is visible partially or when there are trees, shadows or visibility issues along the way.' It can be made more robust by trying different classifiers and improving the accuracy on the test set. Finding the right threshold to improve detection and filter out noise took lot of iterations. 
 
